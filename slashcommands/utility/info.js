@@ -11,7 +11,7 @@ module.exports = {
 		const msg = await interaction.followUp('Loading...').then(m => m.delete(), 1000);
 
 		const embed = new MessageEmbed()
-			.setAuthor('Weky bot stats')
+			.setAuthor(`${client.user.username} stats`)
 			.addField('__Cache__\n', `**Guilds**: ${client.guilds.cache.size} \n**Users**: ${client.users.cache.size}\n\n`, true)
 			.addField('__Uptime__\n', `**Bot**: ${client.uptime}\n**Process**: ${prettyMs(process.uptime() * 1000)}`, true)
 			.addField('__Movement__\n', `**API Latency**: ${Math.round(client.ws.ping)}\n**Bot Latency**: ${msg.createdTimestamp - interaction.createdTimestamp}ms`, true)
