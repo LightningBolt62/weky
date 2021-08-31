@@ -1,8 +1,8 @@
 const { MessageEmbed, MessageButton } = require('discord.js');
-
+const config = require('../../config.json');
 module.exports = {
 	name: 'report',
-	description: 'Report bug in weky!',
+	description: 'Report a bug in the bot!',
 	options: [
 		{
 			type: 'STRING',
@@ -13,12 +13,12 @@ module.exports = {
 	],
 
 	run: async (client, interaction, args) => {
-		const channel = client.channels.cache.get('835185415224950794');
+		const channel = client.channels.cache.get(config.bugreport);
 
 		const btn = new MessageButton()
 			.setLabel('Support server!')
 			.setStyle('url')
-			.setURL('https://discord.gg/2EZSpxNB5z');
+			.setURL(config.supportserver);
 
 		const embed = new MessageEmbed()
 			.setTitle('New Bug!')
