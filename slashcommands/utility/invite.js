@@ -1,5 +1,5 @@
 const { MessageButton, MessageEmbed, MessageActionRow } = require('discord.js');
-
+const config = require('../../config.json');
 module.exports = {
 	name: 'invite',
 	description: 'Support the bot!',
@@ -7,22 +7,22 @@ module.exports = {
 	run: async (client, interaction) => {
 
 		const embed = new MessageEmbed()
-			.addField('**Weky Bot**', 'All these links helps me to grow!');
-
-		const btnInvite = new MessageButton()
-			.setLabel('Premium!')
-			.setStyle('LINK')
-			.setURL('https://patreon.com/weky');
+			.addField(`**${client.user.username}**`, `All these links helps me grow!`);
 
 		const btnBuy = new MessageButton()
+			.setLabel('Donate!')
+			.setStyle('LINK')
+			.setURL(config.donatelink);
+
+		const btnInvite = new MessageButton()
 			.setLabel('Invite me!')
 			.setStyle('LINK')
-			.setURL('https://discord.com/api/oauth2/authorize?client_id=809496186905165834&permissions=261188086870&scope=applications.commands%20bot');
+			.setURL(config.invitelink);
 
 		const btnJoin = new MessageButton()
 			.setLabel('Support server!')
 			.setStyle('LINK')
-			.setURL('https://discord.gg/2EZSpxNB5z');
+			.setURL(config.supportserver);
 
 		interaction.followUp({ embeds: [embed], components: [new MessageActionRow().addComponents([btnInvite, btnBuy, btnJoin])] });
 	},
