@@ -15,7 +15,7 @@ module.exports = {
 			.addField('__Cache__\n', `**Guilds**: ${client.guilds.cache.size} \n**Users**: ${client.users.cache.size}\n\n`, true)
 			.addField('__Uptime__\n', `**Bot**: ${client.uptime}\n**Process**: ${prettyMs(process.uptime() * 1000)}`, true)
 			.addField('__Movement__\n', `**API Latency**: ${Math.round(client.ws.ping)}\n**Bot Latency**: ${msg.createdTimestamp - interaction.createdTimestamp}ms`, true)
-			.addField('__Hosting__\n', `**CPU**: ${os.cpus()[0].model}\n**Platform**: ${os.platform()}\n**RAM**: ${getpercentage} \`|\` ${utils.formatBytes(os.freemem())} / ${utils.formatBytes(os.totalmem())}`, true);
+			.addField('__Hosting__\n', `**CPU**: ${os.cpus()[0].model}\n**Platform**: ${os.platform()}\n**RAM**: ${getpercentage} \`|\` ${(os.freemem / 1024 / 1024).toFixed(2)} MB / ${(os.totalmem() / 1024 / 1024).toFixed(2)} MB`, true);
 
 		interaction.followUp({ embeds: [embed] });
 	},
