@@ -3,6 +3,7 @@ const utils = require('../util/utils');
 const fetch = require('node-fetch');
 const requiredUserDB = require('../schemas/userDB');
 const pms = require('pretty-ms');
+const config = require('../config.json');
 /*  eslint-disable valid-typeof*/
 
 module.exports = async (client, message) => {
@@ -168,8 +169,7 @@ module.exports = async (client, message) => {
 			await requiredUserDB.findOneAndUpdate({ id: message.author.id }, dataUser, { upset: true });
 		}
 		catch (error) {
-
-			await message.channel.send({ embeds: [new Discord.MessageEmbed()
+                        const errorEmbed = new Discord.MessageEmbed()
 				.setColor('RANDOM')
 				.setDescription('```md' +
 					'\n# ERROR\n> ' + error +
@@ -180,14 +180,15 @@ module.exports = async (client, message) => {
 					'\n* Guild ID\n> ' + message.guild.id +
 					'\n```',
 				)
-				.setAuthor(message.author.tag, message.author.displayAvatarURL({ format: 'jpg', dynamic: true })),
-			] });
+				.setAuthor(message.author.tag, message.author.displayAvatarURL({ format: 'jpg', dynamic: true }))
+			await client.channels.cache.get(config.errors).send({ embeds: [errorEmbed,] });
+			await message.channel.send({ embeds: [errorEmbed,] });
 			console.log(error);
 
 			return message.channel.send({ embeds: [
 				new Discord.MessageEmbed()
 					.setTitle('Something went wrong...')
-					.setDescription('Please report it in our [support server](https://discord.gg/Sr2U5WuaSN)')
+					.setDescription(`Please report it in our [support server](${config.supportserver})`)
 					.setColor('RED'),
 			] });
 		}
