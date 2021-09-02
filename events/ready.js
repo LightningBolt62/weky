@@ -3,6 +3,7 @@ const { glob } = require('glob');
 const globPromise = util.promisify(glob);
 const express = require('express');
 const top = require('top.gg-core');
+const config = require('../config.json')
 const webhook = new top.Webhook(process.env.topggPass);
 const { MessageEmbed } = require('discord.js');
 const app = express();
@@ -26,7 +27,7 @@ module.exports = async (client) => {
 	const arrayOfSlashCommands = [];
 	slashCommands.map((value) => {
 		const file = require(value);
-		if (!file?.name) return;
+		if (!file.name) return;
 		client.slashCommands.set(file.name, file);
 		arrayOfSlashCommands.push(file);
 	});
@@ -42,13 +43,13 @@ module.exports = async (client) => {
 	app.post('/tog-gg', webhook.advanced(), async (req) => {
 		const user = await client.users.cache.get(req.vote.user);
 		const embed = new MessageEmbed()
-			.setAuthor(client.user.username, client.user.displayAvatarURL(), 'https://top.gg/bot/809496186905165834/vote')
-			.setURL('https://top.gg/bot/809496186905165834/vote')
+			.setAuthor(client.user.username, client.user.displayAvatarURL(), `https://top.gg/bot/${client.user.id}/vote`)
+			.setURL(`https://top.gg/bot/${client.user.id}/vote`)
 			.setColor('#ffd984')
 			.setThumbnail(user.displayAvatarURL())
 			.setDescription(`**${user.tag}** (${user.id}) just voted for me! They've got their rewards!`)
 			.setTimestamp();
-		client.channels.cache.get('860258180424663040').send({ embeds: [embed] });
+		client.channels.cache.get(config.votelog).send({ embeds: [embed] });
 		try {
 			user.send(`Thanks for voting for me!\nYou received ** 4,000 ${utils.emojis.aero}**, **1 ${utils.emojis.Beryl}**, **3 ${utils.emojis.Jadeite}**!`);
 		}
