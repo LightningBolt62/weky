@@ -61,7 +61,7 @@ module.exports = async (client) => {
 		client.data.addAero(user.id, 4000);
 	});
 
-	app.listen(process.env.SERVER_PORT, () => {
-		console.log(`Weky listening on port ${process.env.SERVER_PORT}`);
+	app.listen(3000, () => {
+		console.log(`Weky listening on port 3000`);
 	});
 };

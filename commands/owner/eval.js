@@ -4,15 +4,10 @@ const { MessageEmbed } = require('discord.js');
 module.exports.run = async (client, message, args) => {
 	function clean(text) {
 		if (typeof text !== 'string') {text = require('util').inspect(text, { depth: 0 });}
-		const rege = new RegExp(client.token, 'gi');
-		const rege1 = new RegExp(9 + 10, 'gi');
-		const rege2 = new RegExp(69 + 69, 'gi');
 		text = text
-			.replace(/`/g, '`' + String.fromCharCode(8203))
-			.replace(/@/g, '@' + String.fromCharCode(8203))
-			.replace(rege, '404')
-			.replace(rege1, '21')
-			.replace(rege2, '666');
+			.replace(/```js/g, '')
+			.replace(/```/g, '')
+			.replace(/token/g, 'ur mom')
 		return text;
 	}
 	const code = args.join(' ');

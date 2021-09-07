@@ -21,7 +21,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.help = {
 	aliases: [],
 	name: 'addbot',
-	description: 'Subtim your bot to be added in Weky Development.',
+	description: 'Submit your bot to be added in Weky Development.',
 	usage: config.prefix + 'wek addbot 123456789123456789 c? A very cool bot it has many futures add it now also check github to check if its safe discord.gg/ rickroll here',
 };
 
