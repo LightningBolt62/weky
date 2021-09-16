@@ -90,7 +90,7 @@ module.exports = async (client, message) => {
 
 			if (sendToChannel.id == message.channel.id) {
 				try {
-					const fetched = await fetch(`https://api.affiliateplus.xyz/api/chatbot?message=${encodeURIComponent(message.content)}&botname=${encodeURIComponent(client.user.username)}&ownername=${encodeURIComponent(config.botowner)}&user=${encodeURIComponent(message.author.id)}`, {});
+					const fetched = await fetch(`https://api.affiliateplus.xyz/api/chatbot?message=${encodeURIComponent(message.content)}&botname=${encodeURIComponent(client.user.username)}&ownername=${encodeURIComponent(config.botownername)}&user=${encodeURIComponent(message.author.id)}`, {});
 					const response = await fetched.json();
 					message.reply(Discord.Util.removeMentions(response.message));
 				}
