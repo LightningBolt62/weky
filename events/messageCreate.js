@@ -27,7 +27,7 @@ module.exports = async (client, message) => {
 		if (data.user.blacklisted == true) return;
 		if(!userDB2) new requiredUserDB({ id: message.author.id }).save();
 
-		// AMOGUS
+ 	/*	// AMOGUS
 		if (guildDB2.amogus.impostorGame == message.author.id && guildDB2.amogus.inWhatChannel == message.channel.id) {
 			if (!client.tempCollector[message.author.id]) client.tempCollector[message.author.id] = 0;
 			client.tempCollector[message.author.id] += 1;
@@ -71,7 +71,7 @@ module.exports = async (client, message) => {
 					}, 10000);
 				});
 			}
-		}
+		}*/
 
 		if (userDB2.is_afk) {
 			await client.data.removeAfk(message.author.id);
@@ -90,7 +90,7 @@ module.exports = async (client, message) => {
 
 			if (sendToChannel.id == message.channel.id) {
 				try {
-					const fetched = await fetch(`https://api.affiliateplus.xyz/api/chatbot?message=${encodeURIComponent(message.content)}&botname=${encodeURIComponent('Weky')}&ownername=${encodeURIComponent('Face')}&user=${encodeURIComponent(message.author.id)}`, {});
+					const fetched = await fetch(`https://api.affiliateplus.xyz/api/chatbot?message=${encodeURIComponent(message.content)}&botname=${encodeURIComponent(client.user.username)}&ownername=${encodeURIComponent(config.botowner)}&user=${encodeURIComponent(message.author.id)}`, {});
 					const response = await fetched.json();
 					message.reply(Discord.Util.removeMentions(response.message));
 				}
@@ -100,13 +100,13 @@ module.exports = async (client, message) => {
 				}
 			}
 		}
-		const prefix = 'wek ';
+		const prefix = config.prefix;
 		if (message.content.match(new RegExp(`^<@!?${client.user.id}>( |)$`))) {
 			const m = new Discord.MessageEmbed()
-				.setTitle('Hi, I\'m Weky !')
+				.setTitle(`Hi, I'm ${client.user.username} !`)
 				.setDescription('A rpg bot on Discord !')
 				.setDescription('My prefix is `' + prefix + '`!')
-				.addField('\u200b', '[Support server](https://discord.gg/Sr2U5WuaSN) | [Bot invite](https://discord.com/api/oauth2/authorize?client_id=809496186905165834&permissions=261188086870&scope=applications.commands%20bot)')
+				.addField('\u200b', `[Support server](${config.supportserver}) | [Bot invite](${config.invitelink})`)
 				.setColor('RANDOM');
 			message.channel.send({ embeds: [m] });
 		}
@@ -151,19 +151,21 @@ module.exports = async (client, message) => {
 
 		try {
 			await commandFile.run(client, message, args, utils, data);
-
-			// await client.channels.cache.get('835464023163535380').send({ embeds: [new Discord.MessageEmbed()
-			// 	.setColor('RANDOM')
-			// 	.setDescription('```md' +
-			// 		'\n* Command\n> ' + command +
-			// 		'\n* Content\n> ' + message.content +
-			// 		'\n* Guild\n> ' + message.guild.name +
-			// 		'\n* User ID\n> ' + message.author.id +
-			// 		'\n* Guild ID\n> ' + message.guild.id +
-			// 		'\n```',
-			// 	)
-			// 	.setAuthor(message.author.tag, message.author.displayAvatarURL({ format: 'jpg', dynamic: true }))
-			// ]});
+      
+/*
+			 await client.channels.cache.get('835464023163535380').send({ embeds: [new Discord.MessageEmbed()
+			 	.setColor('RANDOM')
+			 	.setDescription('```md' +
+			 		'\n* Command\n> ' + command +
+			 		'\n* Content\n> ' + message.content +
+			 		'\n* Guild\n> ' + message.guild.name +
+			 		'\n* User ID\n> ' + message.author.id +
+			 		'\n* Guild ID\n> ' + message.guild.id +
+			 		'\n```',
+			 	)
+			.setAuthor(message.author.tag, message.author.displayAvatarURL({ format: 'png', dynamic: true }))
+			 ]});
+*/
 
 			dataUser.cooldowns[command] = Date.now() + value;
 			await requiredUserDB.findOneAndUpdate({ id: message.author.id }, dataUser, { upset: true });
@@ -180,7 +182,7 @@ module.exports = async (client, message) => {
 					'\n* Guild ID\n> ' + message.guild.id +
 					'\n```',
 				)
-				.setAuthor(message.author.tag, message.author.displayAvatarURL({ format: 'jpg', dynamic: true }))
+				.setAuthor(message.author.tag, message.author.displayAvatarURL({ format: 'png', dynamic: true }))
 			await client.channels.cache.get(config.errors).send({ embeds: [errorEmbed,] });
 			await message.channel.send({ embeds: [errorEmbed,] });
 			console.log(error);
